@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Referrals - NaijaPay Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/toast.css">
+</head>
+<body class="dashboard-page admin-page">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="admin.html" class="sidebar-logo">Admin<span style="background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Panel</span></a>
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">Overview</div>
+        <a href="admin.html" class="nav-link"><i class="fas fa-chart-line"></i> <span>Dashboard</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Management</div>
+        <a href="admin-users.html" class="nav-link"><i class="fas fa-users"></i> <span>Users</span></a>
+        <a href="admin-payment-proofs.html" class="nav-link"><i class="fas fa-file-image"></i> <span>Payment Proofs</span></a>
+        <a href="admin-withdrawals.html" class="nav-link"><i class="fas fa-money-bill-wave"></i> <span>Withdrawals</span></a>
+        <a href="admin-transactions.html" class="nav-link"><i class="fas fa-exchange-alt"></i> <span>Transactions</span></a>
+        <a href="admin-services.html" class="nav-link"><i class="fas fa-cogs"></i> <span>Services</span></a>
+        <a href="admin-credentials.html" class="nav-link"><i class="fas fa-key"></i> <span>Credentials</span></a>
+        <a href="admin-referrals.html" class="nav-link active"><i class="fas fa-share-alt"></i> <span>Referrals</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Communication</div>
+        <a href="admin-broadcast.html" class="nav-link"><i class="fas fa-bullhorn"></i> <span>Broadcast</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">System</div>
+        
+        <a href="admin-settings.html" class="nav-link"><i class="fas fa-sliders-h"></i> <span>Settings</span></a>
+        <a href="dashboard.html" class="nav-link"><i class="fas fa-arrow-left"></i> <span>User View</span></a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-preview">
+        <div class="user-avatar" id="sidebarAvatar">--</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarName">--</div>
+          <div class="user-role">Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="dashboard-header">
+      <div class="header-left">
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        <h1 class="header-title">All Referrals</h1>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" title="Toggle theme"></button>
+        <div class="header-avatar" id="headerAvatar">--</div>
+        <button class="header-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <div class="content-card">
+        <div class="content-card-header">
+          <h3 class="content-card-title">Referral Records</h3>
+        </div>
+        <div class="content-card-body">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr><th>Referrer</th><th>Referred</th><th>Code</th><th>Commission</th><th>Status</th><th>Date</th></tr>
+              </thead>
+              <tbody id="referralsTableBody">
+                <tr><td colspan="6" style="text-align:center;padding:var(--space-xl);color:var(--text-muted)">Loading referrals...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination" id="pagination"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/avatar.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    if (!requireAdmin()) {};
+    initSidebar();
+    updateUserHeader();
+    renderAllAvatars();
+    setActiveNavLink();
+    initAdminReferrals();
+  </script>
+  <script src="js/theme-toggle.js"></script>
+</body>
+</html>

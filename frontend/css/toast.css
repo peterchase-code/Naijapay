@@ -1,0 +1,283 @@
+/* ================================================
+   NaijaPay Premium Toast Notification System
+   Glassmorphism style | Slide from right
+   Supports: success, error, warning, info
+   Dark/light theme compatible
+   ================================================ */
+
+/* ---- Toast Container (fixed top-right) ---- */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
+  width: calc(100vw - 40px);
+  pointer-events: none;
+}
+
+.toast-container > * {
+  pointer-events: auto;
+}
+
+/* ---- Individual Toast ---- */
+.np-toast {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: rgba(16, 20, 45, 0.92);
+  /* backdrop-filter removed for performance - use solid bg instead */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: toastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: right center;
+  min-width: 320px;
+  will-change: transform, opacity;
+}
+
+/* ---- Slide In Animation ---- */
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(120%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* ---- Slide Out Animation ---- */
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(120%) scale(0.9);
+  }
+}
+
+.np-toast.toast-exit {
+  animation: toastSlideOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ---- Type: Success ---- */
+.np-toast.toast-success {
+  border-left: 4px solid #00C853;
+  background: rgba(0, 30, 10, 0.95);
+}
+.np-toast.toast-success .np-toast-icon {
+  color: #00C853;
+  background: rgba(0, 200, 83, 0.15);
+}
+.np-toast.toast-success .np-toast-progress {
+  background: linear-gradient(90deg, #00C853, #69F0AE);
+}
+
+/* ---- Type: Error ---- */
+.np-toast.toast-error {
+  border-left: 4px solid #FF1744;
+  background: rgba(35, 0, 10, 0.95);
+}
+.np-toast.toast-error .np-toast-icon {
+  color: #FF1744;
+  background: rgba(255, 23, 68, 0.15);
+}
+.np-toast.toast-error .np-toast-progress {
+  background: linear-gradient(90deg, #FF1744, #FF8A80);
+}
+
+/* ---- Type: Warning ---- */
+.np-toast.toast-warning {
+  border-left: 4px solid #FFB300;
+  background: rgba(30, 22, 0, 0.95);
+}
+.np-toast.toast-warning .np-toast-icon {
+  color: #FFB300;
+  background: rgba(255, 179, 0, 0.15);
+}
+.np-toast.toast-warning .np-toast-progress {
+  background: linear-gradient(90deg, #FFB300, #FFD54F);
+}
+
+/* ---- Type: Info ---- */
+.np-toast.toast-info {
+  border-left: 4px solid #2979FF;
+  background: rgba(0, 12, 35, 0.95);
+}
+.np-toast.toast-info .np-toast-icon {
+  color: #2979FF;
+  background: rgba(41, 121, 255, 0.15);
+}
+.np-toast.toast-info .np-toast-progress {
+  background: linear-gradient(90deg, #2979FF, #82B1FF);
+}
+
+/* ---- Icon ---- */
+.np-toast-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ---- Content ---- */
+.np-toast-content {
+  flex: 1;
+  min-width: 0;
+  padding-right: 8px;
+}
+
+.np-toast-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+
+.np-toast-message {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.45;
+  word-wrap: break-word;
+}
+
+/* ---- Close Button ---- */
+.np-toast-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.np-toast-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ---- Progress Bar ---- */
+.np-toast-progress-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0 0 14px 14px;
+  overflow: hidden;
+}
+
+.np-toast-progress {
+  height: 100%;
+  width: 100%;
+  border-radius: 0 0 14px 14px;
+  transform-origin: left;
+  animation: toastProgress linear forwards;
+}
+
+@keyframes toastProgress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+/* Pause progress animation on hover */
+.np-toast:hover .np-toast-progress {
+  animation-play-state: paused;
+}
+
+/* ---- Light Theme Overrides ---- */
+[data-theme="light"] .np-toast {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .np-toast.toast-success {
+  background: rgba(240, 255, 245, 0.98);
+}
+[data-theme="light"] .np-toast.toast-error {
+  background: rgba(255, 240, 242, 0.98);
+}
+[data-theme="light"] .np-toast.toast-warning {
+  background: rgba(255, 250, 235, 0.98);
+}
+[data-theme="light"] .np-toast.toast-info {
+  background: rgba(240, 247, 255, 0.98);
+}
+
+[data-theme="light"] .np-toast-title {
+  color: #1a1a2e;
+}
+[data-theme="light"] .np-toast-message {
+  color: rgba(26, 26, 46, 0.7);
+}
+[data-theme="light"] .np-toast-close {
+  color: rgba(26, 26, 46, 0.35);
+}
+[data-theme="light"] .np-toast-close:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(26, 26, 46, 0.7);
+}
+
+[data-theme="light"] .np-toast-progress-wrap {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* ---- Mobile Responsive ---- */
+@media (max-width: 640px) {
+  .toast-container {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+    max-width: none;
+  }
+  .np-toast {
+    min-width: unset;
+    width: 100%;
+    padding: 14px 16px;
+  }
+}
+
+/* ---- Reduced Motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .np-toast {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .np-toast.toast-exit {
+    animation: none;
+    opacity: 0;
+  }
+  .np-toast-progress {
+    animation: none;
+  }
+}

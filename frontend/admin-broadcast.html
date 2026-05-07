@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broadcast Messages - NaijaPay Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/toast.css">
+</head>
+<body class="dashboard-page admin-page">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="admin.html" class="sidebar-logo">Admin<span style="background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Panel</span></a>
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">Overview</div>
+        <a href="admin.html" class="nav-link"><i class="fas fa-chart-line"></i> <span>Dashboard</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Management</div>
+        <a href="admin-users.html" class="nav-link"><i class="fas fa-users"></i> <span>Users</span></a>
+        <a href="admin-payment-proofs.html" class="nav-link"><i class="fas fa-file-image"></i> <span>Payment Proofs</span></a>
+        <a href="admin-withdrawals.html" class="nav-link"><i class="fas fa-money-bill-wave"></i> <span>Withdrawals</span></a>
+        <a href="admin-transactions.html" class="nav-link"><i class="fas fa-exchange-alt"></i> <span>Transactions</span></a>
+        <a href="admin-services.html" class="nav-link"><i class="fas fa-cogs"></i> <span>Services</span></a>
+        <a href="admin-credentials.html" class="nav-link"><i class="fas fa-key"></i> <span>Credentials</span></a>
+        <a href="admin-referrals.html" class="nav-link"><i class="fas fa-share-alt"></i> <span>Referrals</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Communication</div>
+        <a href="admin-broadcast.html" class="nav-link active"><i class="fas fa-bullhorn"></i> <span>Broadcast</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">System</div>
+        
+        <a href="admin-settings.html" class="nav-link"><i class="fas fa-sliders-h"></i> <span>Settings</span></a>
+        <a href="dashboard.html" class="nav-link"><i class="fas fa-arrow-left"></i> <span>User View</span></a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-preview">
+        <div class="user-avatar" id="sidebarAvatar">--</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarName">--</div>
+          <div class="user-role">Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="dashboard-header">
+      <div class="header-left">
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        <h1 class="header-title">Broadcast Messages</h1>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" title="Toggle theme"></button>
+        <div class="header-avatar" id="headerAvatar">--</div>
+        <button class="header-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <!-- Create Broadcast Form -->
+      <div class="content-card" style="max-width: 700px">
+        <div class="content-card-header">
+          <h3 class="content-card-title"><i class="fas fa-paper-plane"></i> Send Broadcast</h3>
+        </div>
+        <div class="content-card-body">
+          <form id="broadcastForm">
+            <div class="form-group">
+              <label class="form-label" for="broadcastTitle">Subject / Title <span style="color:var(--danger)">*</span></label>
+              <input type="text" class="form-input" id="broadcastTitle" placeholder="e.g., System Maintenance Notice" maxlength="200" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="broadcastMessage">Message <span style="color:var(--danger)">*</span></label>
+              <textarea class="form-input" id="broadcastMessage" rows="5" placeholder="Type your broadcast message here... This will be sent as both an in-app notification and an email to all selected users." maxlength="2000" required style="resize:vertical"></textarea>
+              <p style="font-size:var(--text-xs);color:var(--text-muted);margin-top:4px">This will be sent as both in-app notification and email. Max 2000 characters.</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="broadcastTarget">Send To</label>
+              <select class="form-select" id="broadcastTarget">
+                <option value="all">All Users (Users + Admins)</option>
+                <option value="users_only">Regular Users Only</option>
+                <option value="admins_only">Admins Only</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" style="max-width:200px"><i class="fas fa-paper-plane"></i> Send Broadcast</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Broadcast History -->
+      <div class="content-card" style="margin-top:var(--space-xl)">
+        <div class="content-card-header">
+          <h3 class="content-card-title"><i class="fas fa-history"></i> Broadcast History</h3>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr><th>Subject</th><th>Message</th><th>Target</th><th>Reach</th><th>Sent By</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="broadcastTableBody">
+              <tr><td colspan="6" style="text-align:center;padding:var(--space-xl);color:var(--text-muted)"><div class="skeleton" style="height:20px"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="pagination"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- View Broadcast Modal -->
+  <div class="modal-overlay" id="viewBroadcastModal">
+    <div class="modal" style="max-width:520px">
+      <div class="modal-header">
+        <h3 class="modal-title">Broadcast Details</h3>
+        <button class="modal-close" onclick="closeModal('viewBroadcastModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="content-card-body" style="padding:var(--space-lg)">
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <div id="viewBroadcastTitle" style="font-weight:600;font-size:var(--text-lg)">--</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <div id="viewBroadcastMessage" style="white-space:pre-wrap;line-height:1.6;color:var(--text-secondary);padding:var(--space-md);background:var(--bg-dark);border-radius:var(--radius-md)">--</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md)">
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Target</label>
+            <div id="viewBroadcastTarget" style="font-weight:600">--</div>
+          </div>
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Reach</label>
+            <div id="viewBroadcastStats" style="font-weight:600;color:var(--success)">--</div>
+          </div>
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Sent By</label>
+            <div id="viewBroadcastSender" style="color:var(--text-muted)">--</div>
+          </div>
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Date</label>
+            <div id="viewBroadcastDate" style="color:var(--text-muted)">--</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      requireAdmin();
+      updateUserHeader();
+      initSidebar();
+      initAdminBroadcast();
+    });
+  </script>
+  <script src="js/theme-toggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+:root {
+  /* Primary Colors */
+  --primary: #00C853;
+  --primary-dark: #00A344;
+  --primary-light: #69F0AE;
+  --primary-glow: rgba(0, 200, 83, 0.15);
+  
+  /* Secondary Colors */
+  --secondary: #1A237E;
+  --secondary-dark: #0D1147;
+  --secondary-light: #534BAE;
+  
+  /* Accent Colors */
+  --accent: #FF6D00;
+  --accent-light: #FF9E40;
+  
+  /* Background Colors */
+  --bg-dark: #0a0e27;
+  --bg-darker: #06081a;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-glass: rgba(255, 255, 255, 0.07);
+  --bg-glass-hover: rgba(255, 255, 255, 0.12);
+  
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --text-dark: #1a1a2e;
+  
+  /* Border Colors */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.12);
+  
+  /* Status Colors */
+  --success: #00C853;
+  --warning: #FFB300;
+  --danger: #FF1744;
+  --info: #2979FF;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #00C853 0%, #1A237E 100%);
+  --gradient-hero: linear-gradient(135deg, #0a0e27 0%, #1a237e 50%, #0a0e27 100%);
+  --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 40px rgba(0, 200, 83, 0.2);
+  --shadow-primary: 0 4px 20px rgba(0, 200, 83, 0.3);
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 50px;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  
+  /* Typography */
+  --font-sans: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  
+  /* Font Sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3rem;
+  
+  /* Sidebar */
+  --sidebar-width: 280px;
+  --sidebar-collapsed: 70px;
+  --header-height: 70px;
+}

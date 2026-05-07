@@ -1,0 +1,180 @@
+/* =========================================
+   THEME SYSTEM - DARK/LIGHT MODE
+   ========================================= */
+
+/* Default (Dark) Theme */
+:root {
+  --bg-dark: #0a0e27;
+  --bg-darker: #06081a;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-glass: rgba(255, 255, 255, 0.07);
+  --bg-glass-hover: rgba(255, 255, 255, 0.12);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --text-dark: #1a1a2e;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.12);
+  --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 40px rgba(0, 200, 83, 0.2);
+  --input-bg: var(--bg-card);
+  --table-hover: var(--bg-card);
+}
+
+/* Light Theme */
+html[data-theme="light"] {
+  --bg-dark: #f5f7fa;
+  --bg-darker: #eef1f6;
+  --bg-card: rgba(0, 0, 0, 0.03);
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  --bg-glass-hover: rgba(255, 255, 255, 0.9);
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a4a5a;
+  --text-muted: #8a8a9a;
+  --text-dark: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-light: rgba(0, 0, 0, 0.12);
+  --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(245,247,250,0.9) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,243,247,0.9) 100%);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 40px rgba(0, 200, 83, 0.15);
+  --input-bg: #ffffff;
+  --table-hover: rgba(0, 0, 0, 0.02);
+}
+
+html[data-theme="light"] body {
+  background: var(--bg-dark);
+  color: var(--text-primary);
+}
+
+html[data-theme="light"] .landing-nav.scrolled {
+  background: rgba(245, 247, 250, 0.95);
+  backdrop-filter: blur(20px);
+}
+
+html[data-theme="light"] .hero-bg {
+  background: radial-gradient(ellipse at center, rgba(26, 35, 126, 0.1) 0%, transparent 70%);
+}
+
+html[data-theme="light"] .auth-page {
+  background: linear-gradient(135deg, #f5f7fa 0%, #eef1f6 50%, #f5f7fa 100%);
+}
+
+html[data-theme="light"] .auth-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+}
+
+html[data-theme="light"] .content-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+}
+
+html[data-theme="light"] .stat-card {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .feature-card,
+html[data-theme="light"] .service-card,
+html[data-theme="light"] .step-card,
+html[data-theme="light"] .testimonial-card,
+html[data-theme="light"] .faq-item,
+html[data-theme="light"] .contact-card,
+html[data-theme="light"] .contact-form-wrapper {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .notif-card {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .notif-card.unread {
+  background: linear-gradient(90deg, rgba(0, 200, 83, 0.05) 0%, #ffffff 10%);
+}
+
+html[data-theme="light"] .proof-card,
+html[data-theme="light"] .proof-review-card,
+html[data-theme="light"] .cred-card {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .service-admin-card {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .analytics-card {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .modal {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .footer {
+  background: #eef1f6;
+}
+
+html[data-theme="light"] .dashboard-header {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .sidebar {
+  background: #ffffff;
+  border-right: 1px solid var(--border);
+}
+
+html[data-theme="light"] .sidebar-footer {
+  border-top: 1px solid var(--border);
+}
+
+html[data-theme="light"] .form-input,
+html[data-theme="light"] .form-select {
+  background: #ffffff;
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+html[data-theme="light"] .data-table tbody tr:hover {
+  background: var(--table-hover);
+}
+
+html[data-theme="light"] .empty-state-icon {
+  background: var(--bg-darker);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: var(--text-base);
+}
+
+.theme-toggle:hover {
+  background: var(--bg-glass-hover);
+  color: var(--text-primary);
+  border-color: var(--primary);
+}
+
+/* Smooth theme transition - scoped to theme-animated class to avoid global performance hit */
+.theme-animated,
+body,
+html,
+.sidebar,
+.content-card,
+.modal,
+.form-input,
+.form-select,
+.data-table tbody tr {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}

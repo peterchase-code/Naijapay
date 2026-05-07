@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Services - NaijaPay Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/toast.css">
+</head>
+<body class="dashboard-page admin-page">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="admin.html" class="sidebar-logo">Admin<span style="background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Panel</span></a>
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">Overview</div>
+        <a href="admin.html" class="nav-link"><i class="fas fa-chart-line"></i> <span>Dashboard</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Management</div>
+        <a href="admin-users.html" class="nav-link"><i class="fas fa-users"></i> <span>Users</span></a>
+        <a href="admin-payment-proofs.html" class="nav-link"><i class="fas fa-file-image"></i> <span>Payment Proofs</span></a>
+        <a href="admin-withdrawals.html" class="nav-link"><i class="fas fa-money-bill-wave"></i> <span>Withdrawals</span></a>
+        <a href="admin-transactions.html" class="nav-link"><i class="fas fa-exchange-alt"></i> <span>Transactions</span></a>
+        <a href="admin-services.html" class="nav-link active"><i class="fas fa-cogs"></i> <span>Services</span></a>
+        <a href="admin-credentials.html" class="nav-link"><i class="fas fa-key"></i> <span>Credentials</span></a>
+        <a href="admin-referrals.html" class="nav-link"><i class="fas fa-share-alt"></i> <span>Referrals</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Communication</div>
+        <a href="admin-broadcast.html" class="nav-link"><i class="fas fa-bullhorn"></i> <span>Broadcast</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">System</div>
+        <a href="admin-settings.html" class="nav-link"><i class="fas fa-sliders-h"></i> <span>Settings</span></a>
+        <a href="dashboard.html" class="nav-link"><i class="fas fa-arrow-left"></i> <span>User View</span></a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-preview">
+        <div class="user-avatar" id="sidebarAvatar">--</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarName">--</div>
+          <div class="user-role">Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="dashboard-header">
+      <div class="header-left">
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        <h1 class="header-title">Manage Services</h1>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary btn-sm" onclick="openModal('serviceModal'); document.getElementById('serviceForm').reset(); document.getElementById('serviceId').value='';"><i class="fas fa-plus"></i> Add Service</button>
+        <button class="theme-toggle" title="Toggle theme"></button>
+        <div class="header-avatar" id="headerAvatar">--</div>
+        <button class="header-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <div class="content-card">
+        <div class="content-card-header">
+          <h3 class="content-card-title">Payment Services</h3>
+        </div>
+        <div class="content-card-body">
+          <div id="servicesContainer">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--space-lg)" id="servicesGrid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Service Modal -->
+  <div class="modal-overlay" id="serviceModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="serviceModalTitle">Add Service</h3>
+        <button class="modal-close" onclick="closeModal('serviceModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="serviceForm">
+        <input type="hidden" id="serviceId">
+        <div class="form-group">
+          <label class="form-label">Service Name (internal)</label>
+          <input type="text" class="form-input" id="svcName" placeholder="e.g. cashapp" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Display Name</label>
+          <input type="text" class="form-input" id="svcDisplay" placeholder="e.g. Cash App" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <input type="text" class="form-input" id="svcDesc" placeholder="Short description">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Credential Type</label>
+          <select class="form-select" id="svcCredentialType" required>
+            <option value="tag">Tag</option>
+            <option value="email">Email</option>
+            <option value="phone">Phone</option>
+            <option value="username">Username</option>
+            <option value="details">Details</option>
+            <option value="link">Link</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Credential Label</label>
+          <input type="text" class="form-input" id="svcLabel" placeholder="e.g. Cash App Tag" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Instructions</label>
+          <textarea class="form-input" id="svcInstructions" rows="3" placeholder="Payment instructions for users"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Icon Class (Font Awesome)</label>
+          <input type="text" class="form-input" id="svcIcon" value="fa-money-bill" placeholder="e.g. fa-money-bill-wave">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Color (hex)</label>
+          <input type="text" class="form-input" id="svcColor" value="#00C853" placeholder="#00C853">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Exchange Rate (NGN per unit) <span style="color:var(--danger)">*</span></label>
+          <input type="number" class="form-input" id="svcRate" placeholder="e.g. 1500" required min="1" step="1">
+          <p style="font-size:var(--text-xs);color:var(--text-muted);margin-top:4px">How much 1 unit of this service is worth in NGN. Used for auto-converting payment proofs.</p>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Order</label>
+          <input type="number" class="form-input" id="svcOrder" value="0">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Save Service</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/avatar.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    if (!requireAdmin()) {};
+    initSidebar();
+    updateUserHeader();
+    renderAllAvatars();
+    setActiveNavLink();
+    initAdminServices();
+  </script>
+  <script src="js/theme-toggle.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - NaijaPay</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/toast.css">
+</head>
+<body class="dashboard-page">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="dashboard.html" class="sidebar-logo">NaijaPay</a>
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">Main</div>
+        <a href="dashboard.html" class="nav-link"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+        <a href="credentials.html" class="nav-link"><i class="fas fa-id-card"></i> <span>Credentials</span></a>
+        <a href="transactions.html" class="nav-link"><i class="fas fa-exchange-alt"></i> <span>Transactions</span></a>
+        <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i> <span>Notifications</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Finance</div>
+        <a href="withdrawal.html" class="nav-link"><i class="fas fa-money-bill-wave"></i> <span>Withdrawals</span></a>
+        <a href="giftcards.html" class="nav-link"><i class="fas fa-gift"></i> <span>Gift Cards</span></a>
+        <a href="referrals.html" class="nav-link"><i class="fas fa-users"></i> <span>Referrals</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Account</div>
+        <a href="settings.html" class="nav-link active"><i class="fas fa-cog"></i> <span>Settings</span></a>
+        <a href="profile.html" class="nav-link"><i class="fas fa-user"></i> <span>Profile</span></a>
+        <a href="#" class="nav-link" onclick="logout();return false;"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-preview">
+        <div class="user-avatar" id="sidebarAvatar"></div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarName">--</div>
+          <div class="user-role">User</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="dashboard-header">
+      <div class="header-left">
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        <h1 class="header-title">Settings</h1>
+      </div>
+      <div class="header-actions">
+        <a href="notifications.html" class="header-btn"><i class="fas fa-bell"></i></a>
+        <button class="theme-toggle" title="Toggle theme"></button>
+        <div class="header-avatar" id="headerAvatar"></div>
+        <button class="header-btn" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </header>
+    <div class="dashboard-content">
+      <div class="grid grid-cols-2" style="gap: var(--space-xl)">
+        <div class="content-card">
+          <div class="content-card-header">
+            <h3 class="content-card-title"><i class="fas fa-user" style="color:var(--primary);margin-right:var(--space-sm)"></i>Profile Information</h3>
+          </div>
+          <div class="content-card-body">
+            <div id="profileAlert"></div>
+            <form id="profileForm">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" id="fullName" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-input" id="phoneNumber" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Country</label>
+                <select class="form-select" id="country">
+                  <option value="Nigeria">Nigeria</option>
+                  <option value="Ghana">Ghana</option>
+                  <option value="Kenya">Kenya</option>
+                  <option value="South Africa">South Africa</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary" id="profileBtn">Save Changes</button>
+            </form>
+          </div>
+        </div>
+        <div class="content-card">
+          <div class="content-card-header">
+            <h3 class="content-card-title"><i class="fas fa-university" style="color:var(--primary);margin-right:var(--space-sm)"></i>Bank Details</h3>
+          </div>
+          <div class="content-card-body">
+            <div id="bankAlert"></div>
+            <form id="bankForm">
+              <div class="form-group">
+                <label class="form-label">Bank Name</label>
+                <input type="text" class="form-input" id="bankName" placeholder="e.g. GTBank, First Bank" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Account Name</label>
+                <input type="text" class="form-input" id="accountName" placeholder="Name on account" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Account Number</label>
+                <input type="text" class="form-input" id="accountNumber" placeholder="Account number" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Country</label>
+                <input type="text" class="form-input" id="bankCountry" value="Nigeria">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Currency</label>
+                <select class="form-select" id="bankCurrency">
+                  <option value="NGN" selected>NGN - Nigerian Naira</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary" id="bankBtn">Save Bank Details</button>
+            </form>
+          </div>
+        </div>
+        <div class="content-card">
+          <div class="content-card-header">
+            <h3 class="content-card-title"><i class="fas fa-lock" style="color:var(--primary);margin-right:var(--space-sm)"></i>Security</h3>
+          </div>
+          <div class="content-card-body">
+            <div id="securityAlert"></div>
+            <form id="passwordForm">
+              <div class="form-group">
+                <label class="form-label">Current Password</label>
+                <div class="input-group">
+                  <input type="password" class="form-input" id="currentPassword" required>
+                  <span class="password-toggle" onclick="togglePw(this, 'currentPassword')"><i class="fas fa-eye"></i></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <div class="input-group">
+                  <input type="password" class="form-input" id="newPassword" required minlength="6">
+                  <span class="password-toggle" onclick="togglePw(this, 'newPassword')"><i class="fas fa-eye"></i></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm New Password</label>
+                <div class="input-group">
+                  <input type="password" class="form-input" id="confirmNewPassword" required>
+                  <span class="password-toggle" onclick="togglePw(this, 'confirmNewPassword')"><i class="fas fa-eye"></i></span>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary" id="passwordBtn">Update Password</button>
+            </form>
+          </div>
+        </div>
+        <div class="content-card">
+          <div class="content-card-header">
+            <h3 class="content-card-title"><i class="fas fa-bell" style="color:var(--primary);margin-right:var(--space-sm)"></i>Notification Preferences</h3>
+          </div>
+          <div class="content-card-body">
+            <div id="notifAlert"></div>
+            <form id="notifForm">
+              <div class="form-group" style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-md) 0;border-bottom:1px solid var(--border)">
+                <div><div style="font-weight:600">Email Notifications</div><div style="font-size:var(--text-xs);color:var(--text-muted)">Receive notifications via email</div></div>
+                <label class="toggle-switch"><input type="checkbox" id="emailNotif"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="form-group" style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-md) 0;border-bottom:1px solid var(--border)">
+                <div><div style="font-weight:600">Withdrawal Updates</div><div style="font-size:var(--text-xs);color:var(--text-muted)">Get notified about withdrawal status changes</div></div>
+                <label class="toggle-switch"><input type="checkbox" id="withdrawalNotif"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="form-group" style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-md) 0;border-bottom:1px solid var(--border)">
+                <div><div style="font-weight:600">Balance Updates</div><div style="font-size:var(--text-xs);color:var(--text-muted)">Get notified when your balance changes</div></div>
+                <label class="toggle-switch"><input type="checkbox" id="balanceNotif"><span class="toggle-slider"></span></label>
+              </div>
+              <div class="form-group" style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-md) 0">
+                <div><div style="font-weight:600">System Updates</div><div style="font-size:var(--text-xs);color:var(--text-muted)">Receive platform news and updates</div></div>
+                <label class="toggle-switch"><input type="checkbox" id="systemNotif"><span class="toggle-slider"></span></label>
+              </div>
+              <button type="submit" class="btn btn-primary" id="notifBtn" style="margin-top:var(--space-md)">Save Preferences</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <style>.toggle-switch{position:relative;display:inline-block;width:44px;height:24px}.toggle-switch input{opacity:0;width:0;height:0}.toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--bg-card);border-radius:24px;transition:.3s;border:1px solid var(--border)}.toggle-slider:before{content:'';position:absolute;height:18px;width:18px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:.3s}input:checked+.toggle-slider{background:var(--primary);border-color:var(--primary)}input:checked+.toggle-slider:before{transform:translateX(20px)}</style>
+  <script src="js/api.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/avatar.js"></script>
+  <script src="js/settings.js"></script>
+  <script>
+    if (!requireAuth()) {};
+    initSidebar();
+    updateUserHeader();
+    renderAllAvatars();
+    setActiveNavLink();
+    initSettingsPage();
+    function togglePw(el, id) { const i = document.getElementById(id); const ic = el.querySelector('i'); if (i.type === 'password') { i.type = 'text'; ic.classList.replace('fa-eye', 'fa-eye-slash'); } else { i.type = 'password'; ic.classList.replace('fa-eye-slash', 'fa-eye'); } }
+  </script>
+  <script src="js/theme-toggle.js"></script>
+</body>
+</html>

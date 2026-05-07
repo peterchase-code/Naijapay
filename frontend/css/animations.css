@@ -1,0 +1,168 @@
+/* ================================================
+   PERFORMANCE-OPTIMIZED ANIMATIONS
+   Using GPU-accelerated properties only
+   (transform, opacity) and reduced durations
+   ================================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translate3d(0, 20px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translate3d(0, -20px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translate3d(-20px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translate3d(20px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale3d(0.95, 0.95, 1); }
+  to { opacity: 1; transform: scale3d(1, 1, 1); }
+}
+
+@keyframes slideIn {
+  from { transform: translate3d(-100%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale3d(1, 1, 1); opacity: 1; }
+  50% { transform: scale3d(1.03, 1.03, 1); opacity: 0.85; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -8px, 0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -4px, 0); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px var(--primary-glow); }
+  50% { box-shadow: 0 0 15px var(--primary-glow), 0 0 30px var(--primary-glow); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ripple {
+  to { transform: scale3d(4, 4, 1); opacity: 0; }
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* Optimized animation classes with reduced durations */
+.animate-fadeIn { animation: fadeIn 0.4s ease forwards; will-change: opacity; }
+.animate-fadeInUp { animation: fadeInUp 0.4s ease forwards; will-change: transform, opacity; }
+.animate-fadeInDown { animation: fadeInDown 0.4s ease forwards; will-change: transform, opacity; }
+.animate-fadeInLeft { animation: fadeInLeft 0.4s ease forwards; will-change: transform, opacity; }
+.animate-fadeInRight { animation: fadeInRight 0.4s ease forwards; will-change: transform, opacity; }
+.animate-scaleIn { animation: scaleIn 0.3s ease forwards; will-change: transform, opacity; }
+.animate-float { animation: float 3s ease-in-out infinite; will-change: transform; }
+.animate-pulse { animation: pulse 2s ease-in-out infinite; will-change: transform, opacity; }
+.animate-spin { animation: spin 1s linear infinite; will-change: transform; }
+.animate-glow { animation: glow 2s ease-in-out infinite; will-change: box-shadow; }
+.animate-bounce { animation: bounce 1s ease infinite; will-change: transform; }
+
+/* Contain layout for animated sections */
+.animate-fadeInUp,
+.animate-fadeInDown,
+.animate-fadeInLeft,
+.animate-fadeInRight,
+.animate-scaleIn {
+  contain: layout style;
+}
+
+/* Scroll-triggered animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.8s ease;
+}
+.reveal-left.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s ease;
+}
+.reveal-right.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.8s ease;
+}
+.reveal-scale.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger children */
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* Loading skeleton */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-glass) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+}

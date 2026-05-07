@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exchange Rates - NaijaPay Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/credentials.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/toast.css">
+</head>
+<body class="dashboard-page admin-page">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="admin.html" class="sidebar-logo">Admin<span style="background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Panel</span></a>
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section"><div class="nav-label">Overview</div>
+        <a href="admin.html" class="nav-link"><i class="fas fa-chart-line"></i> <span>Dashboard</span></a>
+      </div>
+      <div class="nav-section"><div class="nav-label">Management</div>
+        <a href="admin-users.html" class="nav-link"><i class="fas fa-users"></i> <span>Users</span></a>
+        <a href="admin-payment-proofs.html" class="nav-link"><i class="fas fa-file-image"></i> <span>Payment Proofs</span></a>
+        <a href="admin-withdrawals.html" class="nav-link"><i class="fas fa-money-bill-wave"></i> <span>Withdrawals</span></a>
+        <a href="admin-transactions.html" class="nav-link"><i class="fas fa-exchange-alt"></i> <span>Transactions</span></a>
+        <a href="admin-services.html" class="nav-link"><i class="fas fa-cogs"></i> <span>Services</span></a>
+        <a href="admin-credentials.html" class="nav-link"><i class="fas fa-key"></i> <span>Credentials</span></a>
+        <a href="admin-referrals.html" class="nav-link"><i class="fas fa-share-alt"></i> <span>Referrals</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Communication</div>
+        <a href="admin-broadcast.html" class="nav-link"><i class="fas fa-bullhorn"></i> <span>Broadcast</span></a>
+      </div>
+      <div class="nav-section"><div class="nav-label">System</div>
+        <a href="admin-exchange-rates.html" class="nav-link active"><i class="fas fa-chart-bar"></i> <span>Exchange Rates</span></a>
+        <a href="admin-settings.html" class="nav-link"><i class="fas fa-sliders-h"></i> <span>Settings</span></a>
+        <a href="dashboard.html" class="nav-link"><i class="fas fa-arrow-left"></i> <span>User View</span></a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-preview">
+        <div class="user-avatar" id="sidebarAvatar"></div>
+        <div class="user-info"><div class="user-name" id="sidebarName">--</div><div class="user-role">Administrator</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="dashboard-header">
+      <div class="header-left">
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        <h1 class="header-title">Exchange Rates</h1>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" title="Toggle theme"></button>
+        <div class="header-avatar" id="headerAvatar"></div>
+        <button class="header-btn" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <!-- Summary Bar -->
+      <div class="content-card" style="margin-bottom:var(--space-xl)">
+        <div class="content-card-header">
+          <h3 class="content-card-title"><i class="fas fa-globe" style="color:var(--primary);margin-right:var(--space-sm)"></i>Supported Currencies</h3>
+          <button class="btn btn-sm btn-primary" onclick="refreshRates()">
+            <i class="fas fa-sync-alt"></i> Refresh
+          </button>
+        </div>
+        <div class="content-card-body">
+          <p style="color:var(--text-muted);margin-bottom:var(--space-lg)">
+            Set exchange rates for each currency. These rates auto-convert incoming payments to NGN when users submit payment proofs. Service-specific rates override general rates.
+          </p>
+          <div id="ratesAlert"></div>
+
+          <!-- Rate Cards Grid -->
+          <div class="rate-cards-grid" id="rateCardsGrid">
+            <div style="grid-column:1/-1;text-align:center;padding:var(--space-2xl)">
+              <div class="spinner"></div>
+              <p style="margin-top:var(--space-md);color:var(--text-muted)">Loading exchange rates...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2" style="gap:var(--space-xl)">
+        <!-- Quick Converter -->
+        <div class="content-card">
+          <div class="content-card-header">
+            <h3 class="content-card-title"><i class="fas fa-calculator" style="color:var(--primary);margin-right:var(--space-sm)"></i>Quick Converter</h3>
+          </div>
+          <div class="content-card-body">
+            <div class="form-group">
+              <label class="form-label">Amount</label>
+              <input type="number" class="form-input" id="convAmount" placeholder="Enter amount" step="0.01" min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">From Currency</label>
+              <select class="form-select" id="convCurrency">
+                <option value="USD">USD - US Dollar</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="AUD">AUD - Australian Dollar</option>
+                <option value="CAD">CAD - Canadian Dollar</option>
+                <option value="AED">AED - UAE Dirham</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Service (Optional - uses service-specific rate)</label>
+              <select class="form-select" id="convService">
+                <option value="">General rate</option>
+                <option value="Cash App">Cash App</option>
+                <option value="Zelle">Zelle</option>
+                <option value="Chime">Chime</option>
+                <option value="Apple Pay">Apple Pay</option>
+                <option value="PayPal">PayPal</option>
+                <option value="Gift Card">Gift Card</option>
+                <option value="Amazon Gift Card">Amazon Gift Card</option>
+                <option value="Apple Gift Card">Apple Gift Card</option>
+                <option value="Steam Gift Card">Steam Gift Card</option>
+                <option value="Visa Gift Card">Visa Gift Card</option>
+                <option value="eBay Gift Card">eBay Gift Card</option>
+              </select>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="quickConvert()">
+              <i class="fas fa-exchange-alt"></i> Convert to NGN
+            </button>
+            <div id="convResult" style="margin-top:var(--space-lg);padding:var(--space-xl);background:var(--bg-card);border-radius:var(--radius-lg);text-align:center;display:none;border:1px solid var(--border)">
+              <div style="font-size:var(--text-sm);color:var(--text-muted);margin-bottom:var(--space-sm)">Converted Amount</div>
+              <div style="font-size:var(--text-3xl);font-weight:800;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:var(--font-mono)" id="convResultValue">--</div>
+              <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:var(--space-sm)" id="convResultDetail"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guidelines -->
+        <div class="content-card">
+          <div class="content-card-header">
+            <h3 class="content-card-title"><i class="fas fa-lightbulb" style="color:var(--warning);margin-right:var(--space-sm)"></i>Rate Guidelines</h3>
+          </div>
+          <div class="content-card-body">
+            <ul style="display:flex;flex-direction:column;gap:var(--space-md);color:var(--text-secondary);list-style:none;padding:0">
+              <li style="display:flex;gap:var(--space-md);align-items:flex-start;padding:var(--space-md);background:var(--bg-card);border-radius:var(--radius-md);border:1px solid var(--border)">
+                <i class="fas fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0"></i>
+                <span>Rates auto-apply when admin approves payment proofs. Users see live previews.</span>
+              </li>
+              <li style="display:flex;gap:var(--space-md);align-items:flex-start;padding:var(--space-md);background:var(--bg-card);border-radius:var(--radius-md);border:1px solid var(--border)">
+                <i class="fas fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0"></i>
+                <span>Set <strong>service-specific rates</strong> by selecting a service. These override the general rate.</span>
+              </li>
+              <li style="display:flex;gap:var(--space-md);align-items:flex-start;padding:var(--space-md);background:var(--bg-card);border-radius:var(--radius-md);border:1px solid var(--border)">
+                <i class="fas fa-check-circle" style="color:var(--success);margin-top:3px;flex-shrink:0"></i>
+                <span>Gift cards may have different rates. Create separate service rates for each gift card type.</span>
+              </li>
+              <li style="display:flex;gap:var(--space-md);align-items:flex-start;padding:var(--space-md);background:var(--bg-card);border-radius:var(--radius-md);border:1px solid var(--border)">
+                <i class="fas fa-exclamation-circle" style="color:var(--warning);margin-top:3px;flex-shrink:0"></i>
+                <span>Changes take effect immediately. Always verify current market rates before updating.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/avatar.js"></script>
+  <script src="js/credential-rates.js"></script>
+  <script src="js/theme-toggle.js"></script>
+  <script>
+    if(!requireAdmin()){};
+    initSidebar();
+    updateUserHeader();
+    renderAllAvatars();
+    setActiveNavLink();
+    loadRateCards();
+
+    const currencySymbols = { USD: '$', GBP: '\u00A3', EUR: '\u20AC', AUD: 'A$', CAD: 'C$', AED: '\u062F.\u0625' };
+
+    async function loadRateCards() {
+      const grid = document.getElementById('rateCardsGrid');
+      try {
+        const res = await api.getGroupedRates();
+        const rates = res.data?.rates || [];
+
+        if (rates.length === 0) {
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:var(--space-xl)">No exchange rates configured.</div>';
+          return;
+        }
+
+        grid.innerHTML = rates.map(r => {
+          const symbol = currencySymbols[r.currency] || r.currency;
+          const hasRate = !!r.generalRate;
+          const editingId = `edit-${r.currency}`;
+          return `
+            <div class="rate-card" id="card-${r.currency}">
+              <div class="rate-card-header">
+                <div class="rate-card-currency">
+                  <div class="rate-card-symbol">${symbol}</div>
+                  <div>
+                    <div class="rate-card-title">${r.currency}</div>
+                    <div class="rate-card-subtitle">${r.name}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="rate-card-value" id="display-${r.currency}">
+                ${hasRate ? '\u20A6' + r.generalRate.toLocaleString('en-NG') : 'Not Set'}
+              </div>
+
+              <div class="rate-card-edit" id="editWrap-${r.currency}" style="display:none">
+                <input type="number" class="form-input" id="${editingId}" value="${r.generalRate || ''}" placeholder="Enter rate" step="1" min="1">
+                <div class="rate-card-actions">
+                  <button class="btn btn-sm btn-primary" onclick="saveRate('${r.currency}')">
+                    <i class="fas fa-save"></i> Save
+                  </button>
+                  <button class="btn btn-sm btn-secondary" onclick="cancelEdit('${r.currency}')">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+
+              <div class="rate-card-actions" id="actions-${r.currency}">
+                <button class="btn btn-sm btn-primary" onclick="startEdit('${r.currency}')">
+                  <i class="fas fa-pen"></i> Edit Rate
+                </button>
+                ${!hasRate ? `<button class="btn btn-sm btn-success" onclick="startEdit('${r.currency}')"><i class="fas fa-plus"></i> Set</button>` : ''}
+              </div>
+
+              ${r.serviceRates.length > 0 ? `
+                <div style="margin-top:var(--space-md);padding-top:var(--space-md);border-top:1px solid var(--border)">
+                  <div style="font-size:var(--text-xs);color:var(--text-muted);margin-bottom:var(--space-sm)">Service-Specific Rates</div>
+                  ${r.serviceRates.map(sr => `
+                    <div class="service-rate-row">
+                      <span class="service-rate-name">${sr.serviceName || sr.service}</span>
+                      <span class="service-rate-value">\u20A6${sr.rate.toLocaleString('en-NG')}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+
+              <div class="rate-card-footer">
+                <div class="rate-card-status">
+                  <span class="rate-card-status-dot"></span>
+                  <span>${hasRate ? 'Active' : 'Inactive'}</span>
+                </div>
+                <span>${r.lastUpdated ? 'Updated ' + formatDate(r.lastUpdated) : 'Never updated'}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (error) {
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--danger);padding:var(--space-xl)"><i class="fas fa-exclamation-triangle"></i> ${error.message || 'Failed to load rates'}</div>`;
+      }
+    }
+
+    function startEdit(currency) {
+      document.getElementById(`display-${currency}`).style.display = 'none';
+      document.getElementById(`editWrap-${currency}`).style.display = 'block';
+      document.getElementById(`actions-${currency}`).style.display = 'none';
+      setTimeout(() => document.getElementById(`edit-${currency}`)?.focus(), 100);
+    }
+
+    function cancelEdit(currency) {
+      document.getElementById(`display-${currency}`).style.display = 'block';
+      document.getElementById(`editWrap-${currency}`).style.display = 'none';
+      document.getElementById(`actions-${currency}`).style.display = 'flex';
+    }
+
+    async function saveRate(currency) {
+      const input = document.getElementById(`edit-${currency}`);
+      const rate = parseFloat(input?.value);
+      if (!rate || rate <= 0) {
+        showAlert('ratesAlert', 'Rate must be greater than 0', 'danger');
+        return;
+      }
+      try {
+        await api.setExchangeRate(currency, rate);
+        showAlert('ratesAlert', `${currency} rate updated to \u20A6${rate.toLocaleString('en-NG')}`, 'success');
+        loadRateCards();
+      } catch (error) {
+        showAlert('ratesAlert', error.message || 'Failed to update rate', 'danger');
+      }
+    }
+
+    async function refreshRates() {
+      _cachedRates = null;
+      await loadRateCards();
+      showAlert('ratesAlert', 'Rates refreshed', 'success');
+    }
+
+    async function quickConvert() {
+      const amount = parseFloat(document.getElementById('convAmount').value);
+      const currency = document.getElementById('convCurrency').value;
+      const service = document.getElementById('convService').value;
+      const resultDiv = document.getElementById('convResult');
+
+      if (!amount || amount <= 0) {
+        showAlert('ratesAlert', 'Enter a valid amount', 'danger');
+        return;
+      }
+
+      try {
+        const res = await api.convertCurrency(amount, currency, service || undefined);
+        const converted = res.data?.converted;
+        const rate = res.data?.rate;
+        document.getElementById('convResultValue').textContent = converted ? '\u20A6' + converted.toLocaleString('en-NG') : '--';
+        document.getElementById('convResultDetail').textContent = rate ? `Rate: 1 ${currency} = \u20A6${rate.toLocaleString('en-NG')}${service ? ` (${service})` : ''}` : '';
+        resultDiv.style.display = 'block';
+      } catch (error) {
+        showAlert('ratesAlert', error.message || 'Conversion failed', 'danger');
+      }
+    }
+  </script>
+</body>
+</html>

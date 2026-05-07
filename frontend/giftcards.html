@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gift Cards - NaijaPay</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/toast.css">
+</head>
+<body class="dashboard-page">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="dashboard.html" class="sidebar-logo">NaijaPay</a>
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">Main</div>
+        <a href="dashboard.html" class="nav-link"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+        <a href="credentials.html" class="nav-link"><i class="fas fa-id-card"></i> <span>Credentials</span></a>
+        <a href="transactions.html" class="nav-link"><i class="fas fa-exchange-alt"></i> <span>Transactions</span></a>
+        <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i> <span>Notifications</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Finance</div>
+        <a href="withdrawal.html" class="nav-link"><i class="fas fa-money-bill-wave"></i> <span>Withdrawals</span></a>
+        <a href="giftcards.html" class="nav-link active"><i class="fas fa-gift"></i> <span>Gift Cards</span></a>
+        <a href="referrals.html" class="nav-link"><i class="fas fa-users"></i> <span>Referrals</span></a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Account</div>
+        <a href="settings.html" class="nav-link"><i class="fas fa-cog"></i> <span>Settings</span></a>
+        <a href="profile.html" class="nav-link"><i class="fas fa-user"></i> <span>Profile</span></a>
+        <a href="#" class="nav-link" onclick="logout();return false;"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-preview">
+        <div class="user-avatar" id="sidebarAvatar"></div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarName">--</div>
+          <div class="user-role">User</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="dashboard-header">
+      <div class="header-left">
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        <h1 class="header-title">Gift Cards</h1>
+      </div>
+      <div class="header-actions">
+        <button class="theme-toggle" title="Toggle theme"></button>
+        <a href="notifications.html" class="header-btn"><i class="fas fa-bell"></i></a>
+        <div class="header-avatar" id="headerAvatar"></div>
+        <button class="header-btn" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <div class="content-card" style="margin-bottom: var(--space-xl)">
+        <div class="content-card-header">
+          <h3 class="content-card-title"><i class="fas fa-gift" style="color:var(--primary);margin-right:var(--space-sm)"></i>Supported Gift Cards</h3>
+          <a href="payment-proof.html" class="btn btn-sm btn-primary"><i class="fas fa-upload"></i> Submit Gift Card</a>
+        </div>
+        <div class="content-card-body">
+          <p style="color:var(--text-muted);margin-bottom:var(--space-lg)">
+            Receive payments via popular gift cards. Upload your gift card screenshot and we'll convert the value to NGN (₦) at current exchange rates.
+          </p>
+          <div class="services-grid" id="giftCardGrid">
+            <div class="service-card reveal">
+              <div class="service-logo" style="background: linear-gradient(135deg, #55555520, #55555510);">
+                <i class="fab fa-apple" style="color: #555555;"></i>
+              </div>
+              <h3>Apple Gift Card</h3>
+              <p>Submit Apple Gift Card screenshots for NGN conversion. Supports USD, GBP, EUR.</p>
+            </div>
+            <div class="service-card reveal">
+              <div class="service-logo" style="background: linear-gradient(135deg, #FF990020, #FF990010);">
+                <i class="fab fa-amazon" style="color: #FF9900;"></i>
+              </div>
+              <h3>Amazon Gift Card</h3>
+              <p>Submit Amazon Gift Card screenshots for NGN conversion. Supports USD, GBP, EUR, CAD.</p>
+            </div>
+            <div class="service-card reveal">
+              <div class="service-logo" style="background: linear-gradient(135deg, #1b283820, #1b283810);">
+                <i class="fab fa-steam" style="color: #1b2838;"></i>
+              </div>
+              <h3>Steam Gift Card</h3>
+              <p>Submit Steam Gift Card screenshots for NGN conversion. Supports USD, EUR, GBP.</p>
+            </div>
+            <div class="service-card reveal">
+              <div class="service-logo" style="background: linear-gradient(135deg, #34A85320, #34A85310);">
+                <i class="fab fa-google-play" style="color: #34A853;"></i>
+              </div>
+              <h3>Google Play Gift Card</h3>
+              <p>Submit Google Play Gift Card screenshots for NGN conversion. Supports USD, AUD, CAD.</p>
+            </div>
+            <div class="service-card reveal">
+              <div class="service-logo" style="background: linear-gradient(135deg, #1A1F7120, #1A1F7110);">
+                <i class="fab fa-cc-visa" style="color: #1A1F71;"></i>
+              </div>
+              <h3>Visa Gift Card</h3>
+              <p>Submit Visa Gift Card screenshots for NGN conversion. Supports USD, GBP, EUR, AUD, CAD, AED.</p>
+            </div>
+            <div class="service-card reveal">
+              <div class="service-logo" style="background: linear-gradient(135deg, #E91E6320, #E91E6310);">
+                <i class="fas fa-shopping-bag" style="color: #E91E63;"></i>
+              </div>
+              <h3>Sephora Gift Card</h3>
+              <p>Submit Sephora Gift Card screenshots for NGN conversion. Supports USD, CAD.</p>
+            </div>
+            <div class="service-card reveal">
+              <div class="service-logo" style="background: linear-gradient(135deg, #E5323820, #E5323810);">
+                <i class="fab fa-ebay" style="color: #E53238;"></i>
+              </div>
+              <h3>eBay Gift Card</h3>
+              <p>Submit eBay Gift Card screenshots for NGN conversion. Supports USD, GBP, AUD.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="content-card-header">
+          <h3 class="content-card-title"><i class="fas fa-info-circle" style="color:var(--primary);margin-right:var(--space-sm)"></i>How Gift Card Payments Work</h3>
+        </div>
+        <div class="content-card-body">
+          <div class="steps-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));gap:var(--space-lg)">
+            <div class="step-card" style="padding:var(--space-xl)">
+              <div class="step-number" style="font-size:var(--text-xl)">01</div>
+              <h3 style="font-size:var(--text-base)">Get a Gift Card</h3>
+              <p style="font-size:var(--text-sm)">Receive a gift card from your US sender via email or physical card.</p>
+            </div>
+            <div class="step-card" style="padding:var(--space-xl)">
+              <div class="step-number" style="font-size:var(--text-xl)">02</div>
+              <h3 style="font-size:var(--text-base)">Take a Screenshot</h3>
+              <p style="font-size:var(--text-sm)">Capture a clear screenshot showing the gift card code and value.</p>
+            </div>
+            <div class="step-card" style="padding:var(--space-xl)">
+              <div class="step-number" style="font-size:var(--text-xl)">03</div>
+              <h3 style="font-size:var(--text-base)">Submit Proof</h3>
+              <p style="font-size:var(--text-sm)">Upload the screenshot on our payment proof page with currency details.</p>
+            </div>
+            <div class="step-card" style="padding:var(--space-xl)">
+              <div class="step-number" style="font-size:var(--text-xl)">04</div>
+              <h3 style="font-size:var(--text-base)">Receive NGN</h3>
+              <p style="font-size:var(--text-sm)">We verify and convert to NGN at current rate. Credit goes to your wallet.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/avatar.js"></script>
+  <script src="js/theme-toggle.js"></script>
+  <script>
+    if (!requireAuth()) {};
+    initSidebar();
+    updateUserHeader();
+    renderAllAvatars();
+    setActiveNavLink();
+  </script>
+</body>
+</html>
